@@ -1,0 +1,37 @@
+{
+  "ibuprofen": {
+    "brand_names": ["Advil", "Motrin", "Nurofen"],
+    "drug_class": "NSAID (Non-Steroidal Anti-Inflammatory Drug)",
+    "uses": [
+      "Pain relief",
+      "Fever reduction",
+      "Anti-inflammatory",
+      "Menstrual cramp relief"
+    ],
+    "dosage": {
+      "adults": "200-400mg every 4-6 hours, maximum 1200mg daily",
+      "children": "Based on weight - consult pediatrician"
+    },
+    "side_effects": [
+      "Stomach upset or pain",
+      "Heartburn",
+      "Increased bleeding risk",
+      "Kidney issues with long-term use",
+      "Allergic reactions in sensitive individuals"
+    ],
+    "contraindications": [
+      "Peptic ulcers or stomach bleeding history",
+      "Severe kidney disease",
+      "Third trimester of pregnancy",
+      "Allergy to aspirin or other NSAIDs"
+    ],
+    "interactions": [
+      "Blood thinners (warfarin, aspirin)",
+      "Other NSAIDs",
+      "ACE inhibitors for blood pressure",
+      "Lithium",
+      "Methotrexate"
+    ],
+    "precautions": "Take with food or milk. Avoid alcohol. Do not use for more than 10 days without medical advice."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "common_cold": {
+    "description": "Viral infection of the upper respiratory tract",
+    "symptoms": [
+      "Runny or stuffy nose",
+      "Sneezing",
+      "Sore throat",
+      "Cough",
+      "Mild headache",
+      "Mild body aches",
+      "Low-grade fever"
+    ],
+    "duration": "7-10 days",
+    "contagious_period": "1-2 days before symptoms until symptoms resolve",
+    "treatment": {
+      "self_care": [
+        "Rest and hydration",
+        "Saline nasal sprays",
+        "Warm liquids (tea, broth)",
+        "Humidifier use",
+        "Over-the-counter cold medications"
+      ],
+      "medications": [
+        "Acetaminophen or ibuprofen for fever/aches",
+        "Decongestants for nasal congestion",
+        "Antihistamines for runny nose",
+        "Cough suppressants if needed"
+      ]
+    },
+    "when_to_see_doctor": [
+      "Symptoms lasting more than 10 days",
+      "High fever (above 38.5°C or 101.3°F)",
+      "Severe headache or sinus pain",
+      "Shortness of breath or wheezing",
+      "Symptoms that improve then worsen"
+    ],
+    "prevention": [
+      "Frequent hand washing",
+      "Avoid touching face",
+      "Stay away from sick individuals",
+      "Disinfect frequently touched surfaces"
+    ]
+  }
+}

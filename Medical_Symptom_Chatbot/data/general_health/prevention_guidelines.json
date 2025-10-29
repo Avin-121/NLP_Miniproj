@@ -1,0 +1,39 @@
+{
+  "general_health_maintenance": {
+    "nutrition": [
+      "Eat balanced diet with fruits, vegetables, whole grains",
+      "Limit processed foods, sugar, and saturated fats",
+      "Stay hydrated with water throughout day",
+      "Maintain healthy weight through diet and exercise"
+    ],
+    "exercise": [
+      "150 minutes moderate exercise or 75 minutes vigorous exercise weekly",
+      "Include strength training 2 days per week",
+      "Incorporate flexibility and balance exercises",
+      "Stay active throughout day with walking and movement"
+    ],
+    "sleep": [
+      "7-9 hours quality sleep per night for adults",
+      "Maintain consistent sleep schedule",
+      "Create dark, quiet, cool sleep environment",
+      "Avoid screens 1 hour before bedtime"
+    ],
+    "stress_management": [
+      "Practice relaxation techniques (deep breathing, meditation)",
+      "Maintain social connections",
+      "Set realistic goals and priorities",
+      "Seek professional help for persistent stress"
+    ]
+  },
+  "preventive_screenings": {
+    "blood_pressure": "At least every 2 years for adults over 18",
+    "cholesterol": "Every 4-6 years for adults, more often if risk factors",
+    "diabetes": "Every 3 years for adults over 45, or if overweight with risk factors",
+    "cancer_screenings": [
+      "Colon cancer: Regular screening from age 45",
+      "Breast cancer: Mammograms every 1-2 years from age 40-50",
+      "Cervical cancer: Pap test every 3 years from age 21",
+      "Prostate cancer: Discuss with doctor from age 50"
+    ]
+  }
+}

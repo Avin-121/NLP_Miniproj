@@ -1,0 +1,18 @@
+{
+  "choking_adult": {
+    "situation": "Person cannot breathe, speak, or cough",
+    "steps": [
+      "Ask: 'Are you choking?' If they can speak or cough, encourage them to continue coughing",
+      "If unable to speak, stand behind them and wrap arms around their waist",
+      "Make a fist with one hand and place thumb side against middle of abdomen, above navel",
+      "Grasp fist with other hand and give quick upward thrusts",
+      "Continue until object is expelled or person becomes unconscious",
+      "If unconscious, begin CPR and call emergency services"
+    ],
+    "do_not": [
+      "Do not perform abdominal thrusts on pregnant women or obese individuals - use chest thrusts instead",
+      "Do not slap on the back if person is coughing effectively",
+      "Do not put fingers in mouth to remove object unless visible and easily reachable"
+    ]
+  }
+}

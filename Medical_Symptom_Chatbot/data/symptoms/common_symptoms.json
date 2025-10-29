@@ -1,0 +1,53 @@
+{
+  "fever": {
+    "description": "Elevated body temperature above 38°C (100.4°F)",
+    "common_causes": [
+      "Viral infections (influenza, COVID-19, common cold)",
+      "Bacterial infections (strep throat, UTI, pneumonia)",
+      "Inflammatory conditions (rheumatoid arthritis)",
+      "Heat exhaustion or heat stroke",
+      "Medication side effects",
+      "Autoimmune disorders"
+    ],
+    "severity_indicators": {
+      "mild": "37.5-38°C (99.5-100.4°F), feeling warm",
+      "moderate": "38-39°C (100.4-102.2°F), chills, body aches",
+      "severe": "Above 39°C (102.2°F), confusion, dehydration"
+    },
+    "when_to_seek_help": [
+      "Fever above 40°C (104°F)",
+      "Fever lasting more than 3 days",
+      "Accompanied by stiff neck, confusion, or severe headache",
+      "With difficulty breathing or chest pain",
+      "In infants under 3 months with any fever"
+    ],
+    "self_care": [
+      "Rest and adequate fluid intake",
+      "Over-the-counter fever reducers (acetaminophen, ibuprofen)",
+      "Cool compresses on forehead and wrists",
+      "Light clothing and comfortable room temperature",
+      "Monitor temperature regularly"
+    ]
+  },
+  "headache": {
+    "description": "Pain in any region of the head, ranging from sharp to dull",
+    "types": {
+      "tension_headache": "Mild to moderate constant band-like pain around head",
+      "migraine": "Moderate to severe throbbing pain, often with nausea and light sensitivity",
+      "cluster_headache": "Severe burning or piercing pain around one eye",
+      "sinus_headache": "Deep constant pain in cheekbones, forehead, or bridge of nose"
+    },
+    "red_flags": [
+      "Sudden, severe headache (thunderclap headache)",
+      "Headache after head injury",
+      "Headache with fever, stiff neck, or confusion",
+      "Headache with vision changes, weakness, or numbness",
+      "Headache that worsens with coughing or movement"
+    ],
+    "management": {
+      "tension": "Rest, stress reduction, OTC pain relievers",
+      "migraine": "Dark quiet room, prescription medications",
+      "prevention": "Regular sleep, hydration, stress management"
+    }
+  }
+}

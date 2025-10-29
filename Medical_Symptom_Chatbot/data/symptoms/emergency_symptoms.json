@@ -1,0 +1,40 @@
+{
+  "high_risk_conditions": {
+    "chest_pain": {
+      "description": "Pain, pressure, or discomfort in chest area",
+      "emergency_indicators": [
+        "Pain radiating to arm, jaw, neck, or back",
+        "Crushing or heavy sensation",
+        "Associated with shortness of breath, sweating, or nausea",
+        "Lasting more than 5 minutes",
+        "Worsening with physical activity"
+      ],
+      "possible_causes": [
+        "Heart attack (myocardial infarction)",
+        "Angina",
+        "Pulmonary embolism",
+        "Aortic dissection",
+        "Pneumonia or pleurisy"
+      ],
+      "immediate_action": "Call emergency services immediately. Do not drive yourself. Chew aspirin if not allergic."
+    },
+    "difficulty_breathing": {
+      "description": "Trouble breathing or feeling of suffocation",
+      "emergency_indicators": [
+        "Inability to speak full sentences",
+        "Lips or face turning blue",
+        "Rapid breathing over 30 breaths per minute",
+        "Using neck or chest muscles to breathe",
+        "Confusion or drowsiness"
+      ],
+      "possible_causes": [
+        "Severe asthma attack",
+        "Pulmonary embolism",
+        "Heart failure",
+        "Pneumonia",
+        "Anaphylactic reaction"
+      ],
+      "immediate_action": "Call emergency services. Sit upright. Use rescue inhaler if available."
+    }
+  }
+}
