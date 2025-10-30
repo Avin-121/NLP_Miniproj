@@ -1,88 +1,84 @@
 import streamlit as st
 from pipeline import MedicalChatbot
+import pandas as pd
 
-# -------------------------------
-# STREAMLIT UI
-# -------------------------------
+# Page configuration
+st.set_page_config(
+    page_title="Medical Information Assistant",
+    page_icon="🏥",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Custom CSS
+st.markdown("""
+<style>
+.main-header {
+    font-size: 2.5rem;
+    color: #1f77b4;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.disclaimer {
+    background-color: #fff3cd;
+    border-left: 5px solid #ffc107;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.emergency-warning {
+    background-color: #f8d7da;
+    border-left: 5px solid #dc3545;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.chat-bubble {
+    background-color: #f0f2f6;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 10px 0;
+    border-left: 4px solid #1f77b4;
+}
+.user-bubble {
+    background-color: #d1ecf1;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 10px 0;
+    text-align: right;
+    border-right: 4px solid #17a2b8;
+}
+.database-info {
+    background-color: #e8f5e8;
+    border-left: 4px solid #28a745;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    font-size: 0.8em;
+}
+.feature-card {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px 0;
+    border: 1px solid #dee2e6;
+}
+.quick-button {
+    width: 100%;
+    margin: 2px 0;
+}
+</style>
+""", unsafe_allow_html=True)
+
 def main():
-    # Page configuration
-    st.set_page_config(
-        page_title="Medical Information Assistant",
-        page_icon="🏥",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
-    
-    # Basic CSS
-    st.markdown("""
-    <style>
-    .main-header {
-        font-size: 2.5rem;
-        color: #1f77b4;
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    .disclaimer {
-        background-color: #fff3cd;
-        border-left: 5px solid #ffc107;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 5px;
-    }
-    .emergency-warning {
-        background-color: #f8d7da;
-        border-left: 5px solid #dc3545;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-    .chat-bubble {
-        background-color: #f0f2f6;
-        padding: 15px;
-        border-radius: 15px;
-        margin: 10px 0;
-        border-left: 4px solid #1f77b4;
-    }
-    .user-bubble {
-        background-color: #d1ecf1;
-        padding: 15px;
-        border-radius: 15px;
-        margin: 10px 0;
-        text-align: right;
-        border-right: 4px solid #17a2b8;
-    }
-    .info-box {
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 8px;
-        font-size: 0.9em;
-    }
-    .database-info {
-        background-color: #e8f5e8;
-        border-left: 4px solid #28a745;
-    }
-    .general-info {
-        background-color: #fff3cd;
-        border-left: 4px solid #ffc107;
-    }
-    .feature-card {
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-radius: 10px;
-        margin: 10px 0;
-        border: 1px solid #dee2e6;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-    
     # Header
-    st.markdown('<div class="main-header">Medical Information Assistant</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">🏥 Medical Information Assistant</div>', unsafe_allow_html=True)
     
     # Disclaimer
     st.markdown("""
     <div class="disclaimer">
-    <strong>Important Disclaimer:</strong> This application provides general medical information for educational purposes only. 
+    ⚠️ <strong>Important Disclaimer:</strong> This application provides general medical information for educational purposes only. 
     It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or 
     other qualified health provider with any questions you may have regarding a medical condition.
     </div>
@@ -91,7 +87,7 @@ def main():
     # Emergency warning
     st.markdown("""
     <div class="emergency-warning">
-    For medical emergencies, call your local emergency number immediately! Do not rely on this application for emergency situations.
+    🚨 For medical emergencies, call your local emergency number immediately! Do not rely on this application for emergency situations.
     </div>
     """, unsafe_allow_html=True)
     
@@ -103,55 +99,50 @@ def main():
     
     # Sidebar
     with st.sidebar:
-        st.title("Medical Assistant")
+        st.title("💊 Medical Assistant")
         
-        st.markdown("### Information Sources")
-        st.markdown("""
-        This assistant can provide information from:
-        - **Local Medical Database** (Your JSON files)
-        - **General Medical Knowledge** (Gemini AI)
-        """)
+        st.markdown("### 🔍 Quick Search")
         
-        st.markdown("### Ask About Anything")
-        st.markdown("""
-        You can ask about:
-        - Any medication (prescription, OTC, herbal)
-        - Medical conditions and symptoms
-        - First aid and emergency procedures
-        - Prevention and wellness
-        - Drug interactions and side effects
-        """)
+        # Quick access buttons for conditions
+        st.markdown("**🤒 Common Conditions**")
+        if 'conditions' in st.session_state.chatbot.data:
+            # Check if the dataframe exists and has data
+            df = st.session_state.chatbot.data['conditions']
+            if not df.empty and 'name' in df.columns:
+                conditions = df['name'].head(6).tolist()
+                for condition in conditions:
+                    if st.button(f"🩺 {condition}", key=f"cond_{condition}", use_container_width=True):
+                        st.session_state.user_input = f"Tell me about {condition}"
+        
+        # Quick access buttons for medications
+        st.markdown("**💊 Common Medications**")
+        if 'drugs' in st.session_state.chatbot.data:
+            df = st.session_state.chatbot.data['drugs']
+            if not df.empty:
+                # Use 'drug_name' column for the new structure
+                if 'drug_name' in df.columns:
+                    drugs = df['drug_name'].head(6).tolist()
+                elif 'name' in df.columns:  # Fallback to old structure
+                    drugs = df['name'].head(6).tolist()
+                else:
+                    drugs = []
+                
+                for drug in drugs:
+                    if st.button(f"💊 {drug}", key=f"drug_{drug}", use_container_width=True):
+                        st.session_state.user_input = f"Information about {drug} medication"
+        
+        # Quick access buttons for symptoms
+        st.markdown("**🔍 Common Symptoms**")
+        if 'symptoms' in st.session_state.chatbot.data:
+            df = st.session_state.chatbot.data['symptoms']
+            if not df.empty and 'name' in df.columns:
+                symptoms = df['name'].head(6).tolist()
+                for symptom in symptoms:
+                    if st.button(f"🔍 {symptom}", key=f"symptom_{symptom}", use_container_width=True):
+                        st.session_state.user_input = f"Tell me about {symptom} symptom"
         
         st.markdown("---")
-        st.markdown("### Quick Access")
-        
-        # Medication quick access
-        st.markdown("**Common Medications**")
-        med_buttons = st.columns(2)
-        common_meds = ["Ibuprofen", "Paracetamol", "Aspirin", "Amoxicillin", "Omeprazole", "Metformin"]
-        for i, med in enumerate(common_meds):
-            with med_buttons[i % 2]:
-                if st.button(med, key=f"med_{med}"):
-                    st.session_state.user_input = f"Tell me about {med} medication"
-        
-        # Conditions quick access
-        st.markdown("**Common Conditions**")
-        condition_buttons = st.columns(2)
-        common_conditions = ["Migraine", "Hypertension", "Diabetes", "Asthma", "Arthritis", "Depression"]
-        for i, condition in enumerate(common_conditions):
-            with condition_buttons[i % 2]:
-                if st.button(condition, key=f"cond_{condition}"):
-                    st.session_state.user_input = f"Information about {condition}"
-        
-        st.markdown("---")
-        st.markdown("### Database Stats")
-        topics = st.session_state.chatbot.get_available_topics()
-        st.write(f"Local topics: {len(topics)}")
-        st.write(f"Indexed entries: {len(st.session_state.chatbot.index)}")
-        st.write("General knowledge: Unlimited")
-        
-        # Clear chat button
-        if st.button("Clear Chat History"):
+        if st.button("🗑️ Clear Chat History", use_container_width=True):
             st.session_state.messages = []
             st.rerun()
     
@@ -159,7 +150,7 @@ def main():
     col1, col2 = st.columns([3, 1])
     
     with col1:
-        st.markdown("### Ask Any Medical Question")
+        st.markdown("### 💬 Chat with Medical Assistant")
         
         # Display chat messages
         for message in st.session_state.messages:
@@ -170,64 +161,43 @@ def main():
                 </div>
                 """, unsafe_allow_html=True)
             else:
-                # Add appropriate info box based on content
-                if "database" in message["content"].lower():
-                    info_class = "database-info"
-                    info_text = "Information from medical database"
+                # Check if response came from database or AI
+                if "---" in message["content"] and "*Information from medical database*" in message["content"]:
+                    source_indicator = "📚 From Medical Database"
+                    bubble_class = "database-info"
                 else:
-                    info_class = "general-info"
-                    info_text = "General medical knowledge"
+                    source_indicator = "🤖 AI Generated Response"
+                    bubble_class = "chat-bubble"
                 
                 st.markdown(f"""
-                <div class="info-box {info_class}">
-                    {info_text}
+                <div class="{bubble_class}">
+                    {source_indicator}
                 </div>
                 <div class="chat-bubble">
-                    <strong>Assistant:</strong> {message["content"]}
+                    {message["content"]}
                 </div>
                 """, unsafe_allow_html=True)
         
-        # User input with enhanced options
-        user_input = st.text_area(
-            "Your medical question:",
+        # User input
+        user_input = st.text_input(
+            "Ask about medications, conditions, symptoms, or general health:",
             value=st.session_state.get('user_input', ''),
-            height=100,
-            placeholder="Ask about any medication, condition, symptom, or health topic...",
+            placeholder="e.g., Tell me about diabetes, side effects of ibuprofen, headache symptoms...",
             key="user_input_widget"
         )
         
-        col1_1, col1_2, col1_3 = st.columns([1, 1, 1])
+        # Action buttons
+        col1_1, col1_2 = st.columns(2)
         
         with col1_1:
-            if st.button("Smart Answer", type="primary", use_container_width=True):
+            if st.button("🚀 Smart Analysis", type="primary", use_container_width=True):
                 if user_input.strip():
                     # Add user message to chat
                     st.session_state.messages.append({"role": "user", "content": user_input})
                     
-                    # Detect query type and use appropriate method
-                    query_type = st.session_state.chatbot.detect_query_type(user_input)
-                    
-                    with st.spinner("Analyzing your question..."):
-                        if query_type == "medication":
-                            # Extract medication name
-                            med_keywords = ['about', 'information on', 'tell me about']
-                            med_name = user_input
-                            for keyword in med_keywords:
-                                if keyword in user_input.lower():
-                                    med_name = user_input.lower().split(keyword)[-1].strip()
-                                    break
-                            response = st.session_state.chatbot.get_medication_info(med_name)
-                        elif query_type == "condition":
-                            # Extract condition name
-                            cond_keywords = ['about', 'information on', 'tell me about']
-                            cond_name = user_input
-                            for keyword in cond_keywords:
-                                if keyword in user_input.lower():
-                                    cond_name = user_input.lower().split(keyword)[-1].strip()
-                                    break
-                            response = st.session_state.chatbot.get_condition_info(cond_name)
-                        else:
-                            response = st.session_state.chatbot.generate_response(user_input)
+                    # Generate response
+                    with st.spinner("🔍 Analyzing your query..."):
+                        response = st.session_state.chatbot.generate_smart_response(user_input)
                     
                     # Add assistant response to chat
                     st.session_state.messages.append({"role": "assistant", "content": response})
@@ -239,64 +209,50 @@ def main():
                     st.warning("Please enter a question")
         
         with col1_2:
-            if st.button("Medication Info", use_container_width=True):
-                if user_input.strip():
-                    with st.spinner("Getting medication details..."):
-                        response = st.session_state.chatbot.get_medication_info(user_input)
-                    st.session_state.messages.append({"role": "user", "content": f"Medication: {user_input}"})
-                    st.session_state.messages.append({"role": "assistant", "content": response})
-                    st.session_state.user_input = ""
-                    st.rerun()
-        
-        with col1_3:
-            if st.button("Condition Info", use_container_width=True):
-                if user_input.strip():
-                    with st.spinner("Getting condition details..."):
-                        response = st.session_state.chatbot.get_condition_info(user_input)
-                    st.session_state.messages.append({"role": "user", "content": f"Condition: {user_input}"})
-                    st.session_state.messages.append({"role": "assistant", "content": response})
-                    st.session_state.user_input = ""
-                    st.rerun()
+            if st.button("🔄 New Conversation", use_container_width=True):
+                st.session_state.user_input = ""
+                st.rerun()
     
     with col2:
-        st.markdown("### Features")
+        st.markdown("### 📁 Data Categories")
         
         st.markdown("""
         <div class="feature-card">
-        <strong>Any Medication</strong><br>
-        Get information about prescription drugs, OTC medications, supplements
+        <strong>💊 Medications Database</strong><br>
+        Drug information, side effects, dosages, interactions
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("""
         <div class="feature-card">
-        <strong>Any Condition</strong><br>
-        Learn about diseases, symptoms, treatments, and prevention
+        <strong>🩺 Conditions Database</strong><br>
+        Diseases, symptoms, treatments, prevention
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("""
         <div class="feature-card">
-        <strong>Drug Interactions</strong><br>
-        Understand medication safety and combinations
+        <strong>🔍 Symptoms Database</strong><br>
+        Symptom analysis, possible causes, severity
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("""
         <div class="feature-card">
-        <strong>Local + General</strong><br>
-        Combines your database with general medical knowledge
+        <strong>💡 Solutions Database</strong><br>
+        First aid, home remedies, self-care
         </div>
         """, unsafe_allow_html=True)
         
         st.markdown("---")
-        st.markdown("### Example Questions")
+        st.markdown("### 💡 Example Questions")
         st.markdown("""
-        - "Tell me about Lipitor"
-        - "Side effects of antidepressants"
-        - "What is rheumatoid arthritis?"
-        - "Can I take ibuprofen with blood pressure medication?"
-        - "Symptoms of pneumonia"
+        Try asking:
+        - *"What is diabetes?"*
+        - *"Side effects of aspirin"*
+        - *"Headache symptoms and causes"*
+        - *"Treatment for common cold"*
+        - *"Can I take ibuprofen with blood pressure meds?"*
         """)
 
 if __name__ == "__main__":
